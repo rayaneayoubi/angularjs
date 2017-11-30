@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+  <script src="controller.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+ 
+  <title>Doc</title>
+</head>
+<body  ng-app="Todo">
+  <div id="todoapp" ng-controller="TodoCtrl">
+      
+          <h1>TodoList</h1>
+
+          <form id="todo-form" ng-submit="add(todo)">
+            <input type="checkbox" ng-model="todo.check">
+            To do: <input type="text" id="new-todo" placeholder="Add an action" autofocus autocomplete="off" ng-model="todo.label">
+            category: <input type="text" placeholder="category" ng-model="todo.cat">
+            <input type="submit" value="Add" >
+          <table class="table table-bordered table-striped">
+          <tr> 
+            <th>check</th> 
+            <th>to do </th>
+            <th>Category</th>
+            <th>Action</th>
+          </tr>
+           <tr ng-repeat="todo in todolist" >
+            <td > <span ng-if="!isModeEdit($index)">{{ check(todo) }}</span> 
+              <input ng-if="isModeEdit($index)" type="checkbox" ng-model="todo.check">
+            </td>
+            <td >
+             <span ng-if="!isModeEdit($index)" > {{todo.label}}</span>
+             <input ng-if="isModeEdit($index)"  type="text" id="new-todo" placeholder="Add an action" autofocus autocomplete="off" ng-model="todo.label">
+            </td>
+            <td ><span ng-if="!isModeEdit($index)">{{todo.cat}}</span>
+              <input ng-if="isModeEdit($index)" type="text" placeholder="category" ng-model="todo.cat">
+            </td>
+            <td >
+              <a class="btn btn-default btn-xs" ng-click="delete($index)">Delete</a>
+              <a   ng-if="!isModeEdit($index)" class="btn btn-default btn-xs" ng-click="edit($index)" >Edit</a>
+              <a   ng-if="isModeEdit($index)" class="btn btn-default btn-xs" ng-click="save($index)" >Save</a>
+            
+            </td></tr>
+       </table>
+         
+      </form>
+      </div>
+   
+ </body>
+</html>
