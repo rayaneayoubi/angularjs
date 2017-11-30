@@ -108,4 +108,28 @@ try{
     response.status(500);
 }
 });
+app.put('/todo/:id',function(request,response){
+    try{
+        var todos = JSON.parse(fs.readFileSync('todo.json','utf8'));
+        console.log(todos);
+        var todo= {};
+        for(var i=0 ; i< todos.length ; i++){
+            if( todos[i].id == request.params.id){
+                
+                todo.label = request.body.label;
+                todo.cat = request.body.cat;
+                todo.check = request.body.check;
+                console.log("tod:" + todo);
+                todos.change(todo);
+                 response.status(200).send(todos);
+            }
+        }
+        fs.writeFile('todo.json',JSON.stringify(todos));
+        response.status(404);  
+    }
+    catch(e){
+        console.error("Parsing error:", e); 
+        response.status(500);  
+    }
+});
 });
